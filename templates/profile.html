@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block content %}
+
+
+
+<div class="profile">
+    <div class="profile__container">
+        <div class="profile__info">
+            {% for inform in items_list %}
+            <div class="profile__item">
+                <div class="profile__title">{{ inform[0] }}</div>
+                <div class="profile__description">{{ inform[1] }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="profile__buttons">
+            <div class="profile__button button">
+                <a href="/words">Мои слова</a>
+            </div>
+            <div class="profile__button button">
+                <a href="/logout">Выйти</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

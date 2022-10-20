@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+    <div class="books">
+        <div class="books__container">
+            {% set levels = {1: "Легкая", 2: "Средняя", 3: "Сложная" } %}
+            <div class="books__buttons">
+                <div class="book__button button">
+                    <a href="/add_text">+</a>
+                </div>
+                <div class="book__button button">
+                    <a href="/books_and_texts/0">Все</a>
+                </div>
+                <div class="book__button button">
+                    <a href="/books_and_texts/1">Легкие</a>
+                </div>
+                <div class="book__button button">
+                    <a href="/books_and_texts/2">Средние</a>
+                </div>
+                <div class="book__button button">
+                    <a href="/books_and_texts/3">Сложные</a>
+                </div>
+                <div class="book__search">
+                    <form method="POST">
+                        <input class="input_search" type="text" name="field" autocomplete="off" placeholder="Поиск">
+                        <button type="submit" name="search" class="search_button" value="">
+                            <ion-icon class="search_icon" name="search-outline"></ion-icon>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="books__info">
+                <div class="books__item">
+                    <div class="books__difficulty">Сложность</div>
+                    <div class="books__title">Название</div>
+                    <div class="books__author">Автор</div>
+                    <div class="books__page__count">Страницы</div>
+                </div>
+                {% for book in books %}
+                <div class="books__item">
+                    <div class="books__difficulty">{{ levels[book.difficult_level] }}</div>
+                    <div class="books__title"><a href="/read_book/{{ book.id }}/1/null">{{ book.title }}</a></div>
+                    <div class="books__author">{{ book.author }}</div>
+                    <div class="books__page__count">{{ book.pages }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+{% endblock %}

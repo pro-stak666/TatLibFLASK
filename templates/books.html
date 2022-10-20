@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+    <div class="my-3">
+        <form style="margin-left: 7.5%;" method="POST">
+            <input class="input_search" type="text" name="field" autocomplete="off" placeholder="Поиск">
+            <input type="submit" name="search" value=">" class="search_button">
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Сложность</th>
+                <th scope="col">название</th>
+                <th scope="col">автор</th>
+                <th scope="col">кол-во страниц</th>
+            </tr>
+        </thead>
+        {% set levels = {'easy': "Легкая", 'medium': "Средняя", 'hard': "Сложная" } %} {% for book in books %}
+        <tr>
+            <td>{{ levels[book.difficult_level] }}</td>
+            <td><a href="/read_book/{{ book.id }}/1/null">{{ book.title }}</a></td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.pages }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

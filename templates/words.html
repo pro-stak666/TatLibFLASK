@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+    <div class="user__words__container">
+        <div class="search__buttons">
+            <div class="book__search word__search">
+                <form method="POST">
+                    <input class="input_search" type="text" name="field2" autocomplete="off" placeholder="Поиск">
+                    <button type="submit" name="search2" class="search_button" value="">
+                        <ion-icon class="search_icon" name="search-outline"></ion-icon>
+                    </button>
+                </form>
+            </div>
+            <div class="book__search word__search left__search__button">
+                <form method="POST">
+                    <input class="input_search" type="text" name="field1" autocomplete="off" placeholder="Поиск">
+                    <button type="submit" name="search1" class="search_button" value="">
+                        <ion-icon class="search_icon" name="search-outline"></ion-icon>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Слово на татарском</th>
+                    <th scope="col">Слово на русском</th>
+                </tr>
+            </thead>
+            {% for word in words %}
+            <tr>
+                <td>{{ word.word_tat }}</td>
+                <td>{{ word.word_ru }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}

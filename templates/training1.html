@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="form">
+    <div class="form__container">
+        <form action="" class="form__data" method="post">
+            <h1 class="form__title">Тренировка 1</h1>
+            {{ form.hidden_tag()}}
+            <div class="form__data__element">
+                {% for subfield in form.variants %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                {% endfor %}
+            </div>
+            {{ form.submit(type="submit", class="button training__button") }}
+        </form>
+
+        {% if message %}
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; bottom: 100px; right: 20px;" data-bs-delay="2000" data-bs-autohide="false">
+            <div class="toast-header">
+                <strong>Ошибка</strong>
+                <button type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ message }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
