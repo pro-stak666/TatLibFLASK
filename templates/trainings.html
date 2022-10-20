@@ -4,10 +4,10 @@
     <div class="training__choice__container">
         <div class="training__choice__buttons">
             <div class="training__choice__button button">
-                <a href="/training/1">Выбор перевода</a>
+                <a {% if not message %} href="/training/1" {% endif %}>Выбор перевода</a>
             </div>
             <div class="training__choice__button button">
-                <a href="/training/2">Анаграммы</a>
+                <a {% if not message %} href="/training/2" {% endif %}>Анаграммы</a>
             </div>
         </div>
     </div>

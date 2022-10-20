@@ -4,5 +4,5 @@ from wtforms.validators import DataRequired
 
 
 class TrainingOneForm(FlaskForm):
-    variants = RadioField('Label')
+    variants = RadioField('Label', default=1)
     submit = SubmitField("submit")

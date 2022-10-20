@@ -5,6 +5,7 @@
         <form action="" class="form__data" method="post">
             <h1 class="form__title">Тренировка 1</h1>
             {{ form.hidden_tag()}}
+            {{ word }}
             <div class="form__data__element">
                 {% for subfield in form.variants %}
                 <tr>

@@ -21,7 +21,7 @@ from .db_session import SqlAlchemyBase
 #     sqlalchemy.Column('user_id', sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id')),
 #     sqlalchemy.Column('word_id', sqlalchemy.Integer, sqlalchemy.ForeignKey('words.id')),
 #     sqlalchemy.Column('word_level', sqlalchemy.Integer, nullable=False),
-#     sqlalchemy.Column('next_date_training', sqlalchemy.DateTime, default=datetime.datetime.now)
+#     sqlalchemy.Column('next_date_training', sqlalchemy.Date, default=datetime.date.today)
 # )
 
 
@@ -30,8 +30,8 @@ class Users_to_words(SqlAlchemyBase):
     user_id = sqlalchemy.Column(sqlalchemy.ForeignKey('users.id'))
     word_id = sqlalchemy.Column(sqlalchemy.ForeignKey('words.id'))
     sqlalchemy.PrimaryKeyConstraint(user_id, word_id)
-    word_level = sqlalchemy.Column('word_level', sqlalchemy.Integer, nullable=False, default=0)
-    next_date_training = sqlalchemy.Column('next_date_training', sqlalchemy.DateTime, default=datetime.datetime.now)
+    word_level = sqlalchemy.Column(sqlalchemy.Integer, nullable=False, default=0)
+    next_date_training = sqlalchemy.Column(sqlalchemy.Date, default=datetime.date.today)
 
     user = orm.relationship('Users', back_populates='words')
     word = orm.relationship('Words', back_populates='users')
@@ -56,7 +56,7 @@ class Users(SqlAlchemyBase, UserMixin, SerializerMixin):
     tg_username = sqlalchemy.Column(sqlalchemy.VARCHAR, nullable=True, unique=True)
     tg_id = sqlalchemy.Column(sqlalchemy.Integer, nullable=True, unique=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.VARCHAR, nullable=False)
-    creation_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
+    creation_date = sqlalchemy.Column(sqlalchemy.Date, default=datetime.date.today)
     is_admin = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
 
     books = orm.relationship('Users_to_books', back_populates='user')
