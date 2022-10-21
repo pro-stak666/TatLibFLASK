@@ -1,9 +1,10 @@
-import datetime, os, shutil, random
+import os
+import random
+import shutil
+
 import translators as ts
 from flask import (
     Flask,
-    jsonify,
-    make_response,
     redirect,
     render_template,
     request,
@@ -14,14 +15,13 @@ from flask_login import (
     login_required,
     login_user,
     logout_user,
-    mixins,
 )
+
 from data import db_session
 from data.models import *
-
+from forms.add_text import TextForm
 from forms.login import LoginForm
 from forms.register import RegisterForm
-from forms.add_text import TextForm
 from forms.training1 import TrainingOneForm
 
 app = Flask(__name__)
@@ -91,13 +91,6 @@ def delete_word_of_dict(w):  # принимает татарское слово
 def len_dict_of_words():
     db_sess = db_session.create_session()
     return len(db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id).all())
-
-
-@app.route('/del')
-@login_required
-def delete():
-    print(len_dict_of_words(1))
-    return redirect('/words')
 
 
 @app.route('/add_word')
