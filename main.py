@@ -366,6 +366,7 @@ def training1(val):
 
             variants = random.sample(users_progress[current_user.id]['words'], 4)
             if users_progress[current_user.id]['current_word'] == len(users_progress[current_user.id]['words']):
+                del users_progress[current_user.id]
                 return redirect('/trainings')
             if users_progress[current_user.id]['words'][users_progress[current_user.id]['current_word']] in variants:
                 pass
