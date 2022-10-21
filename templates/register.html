@@ -1,54 +1,33 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="form">
-    <div class="form__container">
-        <form action="" class="form__data" method="post">
-            <h1 class="form__title">Регистрация</h1>
+    <div>
+        <form action="" method="post">
+            <h1>Регистрация</h1>
             {{ form.hidden_tag()}}
-            <div class="form__data__element">
-                {{ form.login(class="form__input", autocomplete="off", id="floatingInput", placeholder="login") }} {% for error in form.login.errors %}
-                <p role="alert">
-                    {{ error }}
-                </p>
-                {% endfor %}
+            <div>
+                {{ form.login(class="", autocomplete="off", placeholder="login") }}
             </div>
-            <div class="form__data__element">
-                {{ form.email(class="form__input", autocomplete="off", id="floatingInput", placeholder="email")}} {% for error in form.email.errors %}
-                <p role="alert">
-                    {{ error }}
-                </p>
-                {% endfor %}
+            <div>
+                {{ form.email(class="", autocomplete="off", placeholder="email")}}
             </div>
-            <div class="form__data__element">
-                {{ form.password(class="form__input", autocomplete="off", type="password", id="floatingPassword", placeholder="password") }} {% for error in form.password.errors %}
-                <p role="alert">
-                    {{ error }}
-                </p>
-                {% endfor %}
+            <div>
+                {{ form.password(class="", autocomplete="off", type="password", placeholder="password") }}
             </div>
-            <div class="form__data__element">
-                {{ form.password_again(class="form__input", autocomplete="off", type="password", id="floatingPassword", placeholder="password again") }} {% for error in form.password_again.errors %}
-                <p role="alert">
-                    {{ error }}
-                </p>
-                {% endfor %}
+            <div>
+                {{ form.password_again(class="", autocomplete="off", type="password", placeholder="password again") }}
             </div>
-            <div class="form__data__element">
-                {{ form.tg_username(class="form__input", autocomplete="off", id="floatingPassword", placeholder="tg_username") }} {% for error in form.tg_username.errors %}
-                <p role="alert">
-                    {{ error }}
-                </p>
-                {% endfor %}
+            <div>
+                {{ form.tg_username(class="", autocomplete="off", placeholder="tg_username") }}
             </div>
             {{ form.submit(type="submit", class="button training__button") }}
         </form>
         {% if message %}
-        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; bottom: 100px; right: 20px;" data-bs-delay="2000" data-bs-autohide="false">
-            <div class="toast-header">
+        <div>
+            <div>
                 <strong>Ошибка</strong>
-                <button type="button" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body">
+            <div>
                 {{ message }}
             </div>
         </div>

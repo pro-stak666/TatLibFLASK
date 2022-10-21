@@ -1,12 +1,12 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="form">
-    <div class="form__container">
-        <form action="" class="form__data" method="post">
-            <h1 class="form__title">Тренировка 1</h1>
+    <div>
+        <form action="" method="post">
+            <h1>Тренировка 1</h1>
             {{ form.hidden_tag()}}
             {{ word }}
-            <div class="form__data__element">
+            <div>
                 {% for subfield in form.variants %}
                 <tr>
                     <td>{{ subfield }}</td>
@@ -14,16 +14,15 @@
                 </tr>
                 {% endfor %}
             </div>
-            {{ form.submit(type="submit", class="button training__button") }}
+            {{ form.submit(type="submit", class="") }}
         </form>
 
         {% if message %}
-        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; bottom: 100px; right: 20px;" data-bs-delay="2000" data-bs-autohide="false">
-            <div class="toast-header">
+        <div>
+            <div>
                 <strong>Ошибка</strong>
-                <button type="button" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body">
+            <div>
                 {{ message }}
             </div>
         </div>

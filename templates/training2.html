@@ -1,18 +1,15 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="form">
+<div>
     <div>
         <form action="" method="post">
-            <h1>Авторизация</h1>
+            <h1>Тренировка 1</h1>
             {{ form.hidden_tag()}}
-            <div>
-                {{ form.login(class="", autocomplete="off", type="login", placeholder="login") }}
-            </div>
-            <div>
-                {{ form.password(class="", autocomplete="off", type="password", placeholder="password") }}
-            </div>
-            {{ form.submit(type="submit", class="") }}
+            {{ word }}
+            {{ form.answer(type="input") }}
+            {{ form.submit(type="submit") }}
         </form>
+
         {% if message %}
         <div>
             <div>

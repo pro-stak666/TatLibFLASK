@@ -22,7 +22,7 @@ from data.models import *
 from forms.add_text import TextForm
 from forms.login import LoginForm
 from forms.register import RegisterForm
-from forms.training1 import TrainingOneForm
+from forms.trainings import TrainingOneForm, TrainingTwoForm
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "yandexlyceum_secret_key"
@@ -303,7 +303,7 @@ def trainings():
 
 @app.route('/training/<int:val>', methods=["GET", "POST"])
 @login_required
-def training1(val):
+def training(val):
     global users_progress, system_to_learn_words
     if val == 1:
         if not (current_user.id in users_progress.keys()):
@@ -314,7 +314,6 @@ def training1(val):
             words = db_sess.query(Words.id, Words.word_tat, Words.word_ru, Users_to_words.word_level, Users_to_words.next_date_training).join(Users_to_words).filter(
                 Words.id.in_(list(map(int, words_id))), Users_to_words.user_id == current_user.id).all()
             words_to_training = []
-            print(words)
             for word in words:
                 today = datetime.date.today()
                 word_day = datetime.date(word[4].year, word[4].month, word[4].day)
@@ -381,6 +380,63 @@ def training1(val):
                 (f'{variants[3][1]}', f'{variants[3][2]}')
             ]
             return render_template("training1.html", title="выбор верного ответа", form=form,
+                                   word=question_word)
+    if val == 2:
+        if not (current_user.id in users_progress.keys()):
+            db_sess = db_session.create_session()
+            words_id = list(
+                map(lambda x: x.word_id,
+                    db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id).all()))
+            words = db_sess.query(Words.id, Words.word_tat, Words.word_ru, Users_to_words.word_level, Users_to_words.next_date_training).join(Users_to_words).filter(
+                Words.id.in_(list(map(int, words_id))), Users_to_words.user_id == current_user.id).all()
+            words_to_training = []
+            for word in words:
+                today = datetime.date.today()
+                word_day = datetime.date(word[4].year, word[4].month, word[4].day)
+                if today < word_day:
+                    pass
+                elif today > word_day:
+                    ass_to_change = db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id,
+                                                                         Users_to_words.word_id == word[0]).first()
+                    ass_to_change.next_date_training = datetime.date.today()
+                    ass_to_change.word_level = 0
+                    db_sess.commit()
+                    words_to_training.append(word)
+                else:
+                    words_to_training.append(word)
+            random.shuffle(words_to_training)
+            users_progress[current_user.id] = {'words': words_to_training, 'current_word': 0, 'date': datetime.date.today()}
+
+        form = TrainingTwoForm()
+
+        if request.method == 'GET':
+            question_word = list(users_progress[current_user.id]['words'][users_progress[current_user.id]['current_word']][1])
+            random.shuffle(question_word)
+            question_word = ''.join(question_word)
+            return render_template("training2.html", title="анаграммы", form=form,
+                                   word=question_word)
+        elif request.method == 'POST':
+            db_sess = db_session.create_session()
+            cur_ass = db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id,
+                                                           Users_to_words.word_id ==
+                                                           users_progress[current_user.id]['words'][users_progress[current_user.id]['current_word']][0]).first()
+            if users_progress[current_user.id]['words'][users_progress[current_user.id]['current_word']][1] == form.answer.data:
+                cur_ass.word_level += 1
+                cur_ass.next_date_training = datetime.date.today() + datetime.timedelta(
+                    days=system_to_learn_words[cur_ass.word_level])
+            else:
+                cur_ass.word_level = 0
+                cur_ass.next_date_training = datetime.date.today()
+            db_sess.commit()
+            users_progress[current_user.id]['current_word'] += 1
+
+            question_word = list(users_progress[current_user.id]['words'][users_progress[current_user.id]['current_word']][1])
+            random.shuffle(question_word)
+            question_word = ''.join(question_word)
+            if users_progress[current_user.id]['current_word'] == len(users_progress[current_user.id]['words']):
+                del users_progress[current_user.id]
+                return redirect('/trainings')
+            return render_template("training2.html", title="выбор верного ответа", form=form,
                                    word=question_word)
 
 
