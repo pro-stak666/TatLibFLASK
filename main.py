@@ -88,6 +88,12 @@ def delete_word_of_dict(w):  # принимает татарское слово
         db_sess.commit()
 
 
+@app.route('/del_word/<word>')
+def del_word(word):
+    delete_word_of_dict(str(word))
+    return redirect('/words')
+
+
 def len_dict_of_words():
     db_sess = db_session.create_session()
     return len(db_sess.query(Users_to_words).filter(Users_to_words.user_id == current_user.id).all())
